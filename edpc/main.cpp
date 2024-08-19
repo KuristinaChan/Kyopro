@@ -201,28 +201,76 @@ namespace __DEBUG_UTIL__
 #endif
 #endif
 
-#define krustina() ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
+#define kuristina() ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
+#define ll long long
+#define pii pair<int,int>
+#define pll pair<long long, long long>
+#define vi vector<int>
+#define vll vector<long long>
+#define si set<int>
+#define sll set<long long>
+#define sc set<char>
+#define vc vector<char>
 
+#define rep(i,a,b) for(int i=a;i<b;i++)
+#define repb(i,a,b) for(int i=a;i<=b;i++)
+#define all(x) x.begin(),x.end()
+#define sz(x) (int)(x).size()
+#define ff first
+#define ss second
+#define ln endl
 
+#define mp make_pair
+#define pqueue priority_queue
+#define pb push_back
+
+ll gcd(const ll a, const ll b){return(b==0?a:gcd(b,a%b));}
+ll lcm(const ll a, const ll b){return a/gcd(a,b)*b;}
+ll binpow(ll a,ll n){ll ans=1;for(;n;n/=2,a*=a)if(n&1)ans*=a;return ans;}
+ll binpow(ll a,ll n,const ll&mod){ll ans=1;for(;n;n/=2,a=a*a%mod)if(n&1)ans=ans*a%mod;return ans;}
+ll cdiv(const ll&a,const ll&b){return(a/b+((a^b)>0 && a%b));}
+ll fdiv(const ll&a,const ll&b){return a/b-((a^b)<0 && a%b);}
+const ll mod = 1000000007;
+// const ll mod = 998244353;
+
+int dfs(int node,vector<int>&dp,vector<vector<int>>&adj){
+    if(adj[node].size()==0)return dp[node]=0;
+    if(dp[node]!=-1)return dp[node];
+    for(auto s:adj[node]){
+        if(dp[s]!=-1)dp[node]=max(dp[s]+1,dp[node]);
+        else dp[node]=max(dp[node],dfs(s,dp,adj)+1);
+    }
+    return dp[node];
+}
 void solve(){
-     int a=0 , b=9;
-     priority_queue<int> p;
-     vector<vector<vector<int>>> v(10, vector<vector<int>>(10,vector<int>(10)));
-     for(int i=0;i<10;i++){
-        for(int j=0;j<10;j++){
-            for(int k=0;k<10;k++){
-                v[i][j][k]=i*j*k;
-            }
+     int n,m;
+     cin>>n>>m;
+     vector<vi> adj(n);
+     vi indegree(n,0);
+     rep(i,0,m){
+        int x,y;
+        cin>>x>>y;
+        adj[--x].pb(--y);
+        indegree[y]++;
+     }
+     debug(adj);
+     vector<int> dp(n,-1);
+     debug(dp);
+     rep(i,0,n){
+        if(indegree[i]==0 && dp[i]==-1){
+            dfs(i,dp,adj);
         }
      }
-     for(int i=0;i<10;i++)p.push(i*7);
-     debug(v);
+     ll ans = 0;
+     rep(i,0,n)ans = max(ans,1ll*dp[i]);
+     debug(dp);
+     cout<<ans<<ln;
 }
 int main(){
     #ifndef ONLINE_JUDGE
     freopen("Error.txt", "w", stderr);
     #endif
-    krustina();
+    kuristina();
 
     solve();
 }

@@ -232,30 +232,31 @@ ll cdiv(const ll&a,const ll&b){return(a/b+((a^b)>0 && a%b));}
 ll fdiv(const ll&a,const ll&b){return a/b-((a^b)<0 && a%b);}
 const ll mod = 1000000007;
 // const ll mod = 998244353;
-#define int long long
+#define ld long double
 void solve(){
-     int h,w;
-     cin>>h>>w;
-     vector<vc> grid(h,vc(w));
-     rep(i,0,h){
-        rep(j,0,w){
-            cin>>grid[i][j];
+     int n;
+     cin>>n;
+     vector<ld> p(n);
+     rep(i,0,n)cin>>p[i];
+     vector<vector<ld>> dp(n+1,vector<ld> (n+1,0));
+    //  rep(i,0,n+1)if(i>n/2)dp[0][i]=1.0;
+    dp[0][0]=1.0;
+     rep(i,0,n){
+        rep(j,0,i+1){
+            dp[i+1][j]+=dp[i][j]*(1.0-p[i]);
+            dp[i+1][j+1]+=dp[i][j]*(p[i]);
+            // if(j>=1)dp[i+1][j]=dp[i][j-1]*(p[i]);
         }
      }
-     
-     vector<vector<int>> dp(h+1,vi(w+1,0));
-     dp[1][1]=grid[0][0]=='.';
-     rep(i,0,h){
-        rep(j,0,w){
-            if(i==0 && j==0)continue;
-            if(grid[i][j]=='.'){dp[i+1][j+1]=(dp[i][j+1]%mod+dp[i+1][j]%mod)%mod;}
-        }
+     int d = (n/2+1);
+     ld ans = 0;
+     rep(i,d,n+1){
+        ans+=dp[n][i];
      }
-     debug(h,w,grid,dp);
-     cout<<dp[h][w]<<ln;
-     return;
+     debug(p,dp);
+     cout<<fixed<<setprecision(9)<<ans<<ln;
 }
-int32_t main(){
+int main(){
     #ifndef ONLINE_JUDGE
     freopen("Error.txt", "w", stderr);
     #endif

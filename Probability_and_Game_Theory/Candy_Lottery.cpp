@@ -263,7 +263,7 @@ void solve() {
         }
         expected_value += (x)*(p1 - p2);
     }
-    cout << fixed << setprecision(9) << expected_value << ln;
+    cout << fixed << setprecision(6) << expected_value << ln;
 }
 int main(){
     #ifndef ONLINE_JUDGE

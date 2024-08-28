@@ -234,22 +234,23 @@ const ll mod = 1000000007;
 // const ll mod = 998244353;
 
 void solve(){
-     long double n;
-     cin>>n;
-     vector<long double> r(n);
-     rep(i,0,n)cin>>r[i];
-     long double ev = 0.0;
-     rep(i,0,n){
-        rep(j,i+1,n){
-            long double p1 = 0.0;
-            rep(x,2,r[i]+1){
-                long double sv = min((long double)(x)-1.0,(long double)r[j]);
-                p1+=(1.0/(long double)(r[i]))*(sv/(long double)(r[j]));
-            }
-            ev+=p1;
+     int t;
+     cin>>t;
+     while(t--){
+        int n;
+        cin>>n;
+        int odd_cnt = 0;
+        int even_cnt = 0;
+        rep(i,0,n){
+            ll s;
+            cin>>s;
+            if(s&1)odd_cnt++;
+            else even_cnt++;
         }
+        if(odd_cnt>0)cout<<"first"<<ln;
+        else cout<<"second"<<ln;
      }
-     cout<<fixed<<setprecision(6)<<ev<<ln;
+     return;
 }
 int main(){
     #ifndef ONLINE_JUDGE

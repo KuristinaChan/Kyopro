@@ -234,22 +234,24 @@ const ll mod = 1000000007;
 // const ll mod = 998244353;
 
 void solve(){
-     long double n;
-     cin>>n;
-     vector<long double> r(n);
-     rep(i,0,n)cin>>r[i];
-     long double ev = 0.0;
-     rep(i,0,n){
-        rep(j,i+1,n){
-            long double p1 = 0.0;
-            rep(x,2,r[i]+1){
-                long double sv = min((long double)(x)-1.0,(long double)r[j]);
-                p1+=(1.0/(long double)(r[i]))*(sv/(long double)(r[j]));
-            }
-            ev+=p1;
+     int n,k;
+     cin>>n>>k;
+     vi a(k);
+     rep(i,0,k)cin>>a[i];
+     vector<bool> dp(n+1,false);
+     rep(i,1,n+1){
+        rep(j,0,k){
+            if(i-a[j]>=0)dp[i]= dp[i]|(!(dp[i-a[j]]));
         }
      }
-     cout<<fixed<<setprecision(6)<<ev<<ln;
+     rep(i,0,n){
+        if(dp[i+1]){
+            cout<<"W";
+        }else{
+            cout<<"L";
+        }
+     }
+     return;
 }
 int main(){
     #ifndef ONLINE_JUDGE

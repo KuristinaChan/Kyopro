@@ -260,6 +260,23 @@ void bfs(int start) {
         }
     }
 }
+void bfs2(int node , ll &val, vector<bool> &vis){
+    queue<int> q;
+    q.push(node);
+    vis[node]=true;
+    val^=coins[node];
+    while(!q.empty()){
+        int node = q.front();
+        q.pop();
+        for(int neighbor : adj[node]){
+            if(!vis[neighbor]){
+                val^=coins[neighbor];
+                vis[neighbor]=true;
+                q.push(neighbor);
+            }
+        }
+    }
+}
 void solve(){
      cin>>n;
      rep(i,0,n){
@@ -299,7 +316,8 @@ void solve(){
         int new_level = level[b]+1;
         ll cur = x;
         if(level[a]%2 != new_level%2){
-            cur^=coins[a];
+            vector<bool> vis(n,false);
+            bfs2(a,cur,vis);
         }
         if(cur>0)cout<<"YES"<<ln;
         else cout<<"NO"<<ln;
